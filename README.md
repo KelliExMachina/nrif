@@ -59,7 +59,7 @@ I will initially split the data from the Cohn-Kanade dataset into train and test
 
 ## Illustrations 
 
-![Place Holder](img/placeholder.jpg)  
+![Place Holder](img/lucy.jpeg)  
 
 ## Deployment  
 
