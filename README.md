@@ -1,4 +1,4 @@
-<p align="center"><img src="img/YBCheeri-yo.jpg" title="Cheeri-yo" width="600" height="400" /></a></p>  
+<p align="center"><img src="img/YBCheeri-yo.jpg" title="Cheeri-yo"></a></p>  
 
 
 
@@ -59,19 +59,11 @@ I will initially split the data from the Cohn-Kanade dataset into train and test
 
 ## Illustrations 
 
-![Pumps vs Population](img/pump_status_sns.jpg)  
-![Pumps vs Population](img/pump_pop.jpg)  
-![Installers](img/repairs_installers.jpg)     
-![Well Locations](img/pump_locations.jpg)  
-![Dropped needs repair](img/pump_locations_noyellow.jpg)  
-![Model Image](img/model_mod.png)  
-![Confusion Matrix](img/confusion.jpg)  
+![Place Holder](img/placeholder.jpg)  
 
 ## Deployment  
 
 The model will be deployed as a Flask app that users can upload a previously taken photo or by activating a web cam to send their picture.  The app will then use the model to predict the emotion of the person.  As the model is used by others, their data can be saved, tagged, and then used as future training data.
-
-
 
 
 ## Data-Sources
@@ -79,12 +71,12 @@ The model will be deployed as a Flask app that users can upload a previously tak
 [![Cohn-Kanade (CK and CK+) database][1]][2]
 
 [1]: img/pitt_edu_logo.jpg   
-[2]: https://www.pitt.edu/ "Contact: Yaohan Ding YAD30@pitt.edu"  
+[2]: https://www.pitt.edu/ "Cohn-Kanade Database. Contact: Yaohan Ding YAD30@pitt.edu"  
 
 [![Tufts Face Database][3]][4]
 
 [3]: img/tufts_university.png 
-[4]: http://tdface.ece.tufts.edu "You must request permission to use this dataset!!!"  
+[4]: http://tdface.ece.tufts.edu "Tufts Face Database: Request permission to use this dataset!!!"  
 
 
 ## Next-steps  
