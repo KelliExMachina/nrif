@@ -26,7 +26,7 @@ I often participate in many startup businesses i.e. restaurants, events, and suc
 
 ## Content
 
-I have over 200 GB of data in two datasets: first is the industry standard Cohn-Kanade (CK and CK+) database.  I will use this database to train my model.  Once the model is trained, I will test it against the second dataset.
+I have over 200 GB of data in two datasets: first is the industry standard Cohn-Kanade (CK and CK+) database.  I will use this database to train my model.  Once the model is trained, I will test it against the second dataset.  If I do not have permission to use this dataset prior to project kickoff, I will split the data from the following dataset for train and test data.
 
 The second dataset was collected by Tufts University, and referenced on Kaggle.  Tufts Face Database is the latest, most comprehensive, large-scale (over 10,000 images, 74 females + 38 males, from more than 15 countries with an age range between 4 to 70 years old) face dataset that contains 6 image modalities: visible, near-infrared, thermal, computerized sketch, a recorded video, and 3D images.  I will be specifically using the TDRGBE and TDIRE image datasets for testing.
 
@@ -36,18 +36,24 @@ TDIRE: Images were captured using a FLIR Vue Pro camera with participants posing
 
 ## Data-Preparation
 
-There are basically two stages for my project: 1) face detection and 2) emotional detection.  I will train a cascade classifier from OpenCV and use the Viola & Jones method for the face detection.  For the second step, I will match the face image (using Eigenfaces or Fisherfaces method) to an image in a SQLite database, built from the Tufts Face Database.  For the closest matching image, I will assign a probability for the particular emotion.
+There are basically two stages for my project: 1) face detection and 2) emotional detection.  I will train a cascade classifier from OpenCV and use the Viola & Jones method for the face detection.  (this is to be performed in a project prior to the capstone kickoff).  
+
+For the second step (this project), I will match the face image (using Eigenfaces or Fisherfaces method) to an image in a SQLite database, built from the Tufts Face Database.  For the closest matching image, I will use the Softmax activation function to assign a probability for the particular emotion.  Drop the second dataset if there is no response from the source by project kickoff.
 
 In order to protect the data, I will implement EncryptedPickle to protect the model and data while in use.  The database content and metadata will be encrypted with the SQLCipher extension.
 
+Images will be converted to grayscale during the verification process.
+
 ## Modeling
 
-This will be a supervised learning model as the data in my dataset is tagged.  I will choose a statistical approach to modelling and therefore fit a PCA model initially.  I will add a Feed Forward Neural Network, to increase model accuracy. Then I will test a Convolutional Neural Network to increase the model efficiency.  
+This will be a supervised learning model as the data in my dataset is tagged.  I will choose a statistical approach to modelling and therefore fit a PCA model initially.  I will add a Feed Forward Neural Network, to increase model accuracy. Then I will test a pre-trained Convolutional Neural Network (CNN) to increase the model efficiency.  Using:keras, tensorflow, how many hidden nodes, how many layers? Using 'Softmax' to output probabilities as I'm using a multi-class variable.  I'm also using 'Dropout' to prevent the model from overusing a particular path.  And finally, implemented 'Early Stopping' to prevent overtraining the model.
 
 ## Analysis
 
 
 ## Model-Evaluation
+
+I implemented CUDA and optimized the modelling and network training to run in GPU as opposed to CPU.  That alone decreased modelling and training time by a factor of 12.
 
 - <type> Classifier
 - Accuracy: %
@@ -60,6 +66,11 @@ I will initially split the data from the Cohn-Kanade dataset into train and test
 ## Illustrations 
 
 ![Place Holder](img/lucy.jpeg)  
+
+[![Interactive Neural Network][5]][6]  
+
+[5]: img/NN_example.png  
+[6]: http://playground.tensorflow.org   
 
 ## Deployment  
 
@@ -81,6 +92,8 @@ The model will be deployed as a Flask app that users can upload a previously tak
 
 ## Next-steps  
  
+- Extend the application to webcams.  
+- Extend the application to video feeds.  
 
 ## Citations
 
