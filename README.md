@@ -4,7 +4,7 @@
 
 # cheeri-yo  
 
-Emotion detection application utilizing OpenCV and a whole lot of research.  http://www.notsurewhereitgoes.io  
+Emotion detection application utilizing OpenCV and keras/Tensorflow.  http://www.notsurewhereitgoes.io  
 
 
 ## Context
@@ -94,6 +94,7 @@ The model will be deployed as a Flask app that users can upload a previously tak
  
 - Extend the application to webcams.  
 - Extend the application to video feeds.  
+- Add tracking for video.
 
 ## Citations
 
