@@ -1,9 +1,9 @@
-<p align="center"><img src="img/YBCheeri-yo.jpg" title="Cheeri-yo"></a></p>  
+<p align="center"><img src="img/NRIF.jpg" title="No, really. I'm fine!"></a></p>  
 
 
 
 # NRIF
-## No, really.  I’m fine. 
+## No, really.  I’m fine! 
 
 Emotion detection application utilizing OpenCV and keras/Tensorflow.  http://www.notsurewhereitgoes.io  
 
