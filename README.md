@@ -1,4 +1,4 @@
-<p align="center"><img src="img/NRIF.jpg" title="No, really. I'm fine!"></a></p>  
+<p align="center"><img src="img/nrif.jpg" title="No, really. I'm fine!"></a></p>  
 
 
 
