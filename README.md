@@ -2,14 +2,15 @@
 
 
 
-# cheeri-yo  
+# NRIF
+## No, really.  I’m fine. 
 
 Emotion detection application utilizing OpenCV and keras/Tensorflow.  http://www.notsurewhereitgoes.io  
 
 
 ## Context
 
-I often participate in many startup businesses i.e. restaurants, events, and such.  I’ve always wondered how to tell when someone is truly enjoying themselves, or when they are just trying to be nice.  This is always a concern for a business when selling/presenting something new for the first time, whether a new dish at a restaurant, a new lecture style at school, or even when viewing a real estate property.  
+The recent Covid-19 pandemic has forced many technology persons to work from home.  As humans, we are often conditioned to say things in a positive manner even when things are not positive at all.  This application was designed to allow human resource departments to monitor the emotionsl health of company resouces by reading facial expressions from a web camera and predicting the subjects emotions.  
 
 ## Table of Contents
 
@@ -26,9 +27,7 @@ I often participate in many startup businesses i.e. restaurants, events, and suc
 
 ## Content
 
-I have over 200 GB of data in two datasets: first is the industry standard Cohn-Kanade (CK and CK+) database.  I will use this database to train my model.  Once the model is trained, I will test it against the second dataset.  If I do not have permission to use this dataset prior to project kickoff, I will split the data from the following dataset for train and test data.
-
-The second dataset was collected by Tufts University, and referenced on Kaggle.  Tufts Face Database is the latest, most comprehensive, large-scale (over 10,000 images, 74 females + 38 males, from more than 15 countries with an age range between 4 to 70 years old) face dataset that contains 6 image modalities: visible, near-infrared, thermal, computerized sketch, a recorded video, and 3D images.  I will be specifically using the TDRGBE and TDIRE image datasets for testing.
+I have over 200 GB of data in a dataset that was collected by Tufts University, and referenced on Kaggle.  Tufts Face Database is the latest, most comprehensive, large-scale (over 10,000 images, 74 females + 38 males, from more than 15 countries with an age range between 4 to 70 years old) face dataset that contains 6 image modalities: visible, near-infrared, thermal, computerized sketch, a recorded video, and 3D images.  I will be specifically using the TDRGBE and TDIRE image datasets for testing.
 
 TDRGBE: The images were captured using a NIKON D3100 camera. Each participant was asked to pose with a neutral expression, a smile, eyes closed, exaggerated shocked expression, and finally wearing sunglasses.
 
@@ -36,13 +35,27 @@ TDIRE: Images were captured using a FLIR Vue Pro camera with participants posing
 
 ## Data-Preparation
 
-There are basically two stages for my project: 1) face detection and 2) emotional detection.  I will train a cascade classifier from OpenCV and use the Viola & Jones method for the face detection.  (this is to be performed in a project prior to the capstone kickoff).  
+There are basically two stages for the project: 1) face detection and 2) emotional detection.  I will train a cascade classifier from OpenCV and use the Viola & Jones method for the face detection.  
 
-For the second step (this project), I will match the face image (using Eigenfaces or Fisherfaces method) to an image in a SQLite database, built from the Tufts Face Database.  For the closest matching image, I will use the Softmax activation function to assign a probability for the particular emotion.  Drop the second dataset if there is no response from the source by project kickoff.
+For the second step, I will match the face image (using thecFisherfaces method) to an image in a PostgreSQL database, built from the Tufts Face Database.  For the closest matching image, I will use the Softmax activation function to assign a probability for the particular emotion.
 
-In order to protect the data, I will implement EncryptedPickle to protect the model and data while in use.  The database content and metadata will be encrypted with the SQLCipher extension.
+Specifically:  
 
-Images will be converted to grayscale during the verification process.
+Load the image dataset into a PostgreSQL database  
+Programatically 'label' the images  
+Split into train and test sets  
+Load each train image and:  
+
+1. Resize the image  
+2. Convert to grayscale  
+3. Detect face boundary with cascade classifier  
+4. Save the face boundary (ROI) to be passed to the second function.  
+5. Call the FisherFaces classifier on the train roi image.  
+6. Use the resulting trained model to predict on the test data.  
+
+In order to protect the data, I will implement EncryptedPickle to protect the model and data while in use.  The database content and metadata are encrypted with the SQLCipher extension.
+
+Images are converted to grayscale during the verification process.
 
 ## Modeling
 
@@ -50,6 +63,7 @@ This will be a supervised learning model as the data in my dataset is tagged.  I
 
 ## Analysis
 
+Enter analysis here.
 
 ## Model-Evaluation
 
@@ -60,7 +74,9 @@ I implemented CUDA and optimized the modelling and network training to run in GP
 - Recall: %
 - The most significant features include: .  
 
-I will initially split the data from the Cohn-Kanade dataset into train and test portions.  After the model is trained, I will generate classification reports to test the accuracy while tuning the model.  After the model is trained, I will refit the data to the full Cohn-Kanade dataset and test against the unseen data in the Tufts Face Database.  If possible, I’d like to test against both the TDRGBE and the matching infrared dataset TDIRE.
+I split the data into train and test portions using scikit-learn's train_test_split.  After the model was trained on 70% of the data, I generated a confusion matrix to illustrat the accuracy of the model.
+
+It is worthwhile to note, that while the Cascade Classifier correctly found all of the faces in the RGB dataset, the same classifier failed to detect any faces in the infrared dataset.
 
 
 ## Illustrations 
@@ -74,27 +90,22 @@ I will initially split the data from the Cohn-Kanade dataset into train and test
 
 ## Deployment  
 
-The model will be deployed as a Flask app that users can upload a previously taken photo or by activating a web cam to send their picture.  The app will then use the model to predict the emotion of the person.  As the model is used by others, their data can be saved, tagged, and then used as future training data.
+The model is deployed as a Flask app that users can upload a previously taken photo or by activating a web cam to send their current picture.  The app will then uses the model trained here to predict the emotion of the subject.  
 
 
-## Data-Sources
+## Data-Sources  
 
-[![Cohn-Kanade (CK and CK+) database][1]][2]
+[![Tufts Face Database][1]][2]  
 
-[1]: img/pitt_edu_logo.jpg   
-[2]: https://www.pitt.edu/ "Cohn-Kanade Database. Contact: Yaohan Ding YAD30@pitt.edu"  
-
-[![Tufts Face Database][3]][4]
-
-[3]: img/tufts_university.png 
-[4]: http://tdface.ece.tufts.edu "Tufts Face Database: Request permission to use this dataset!!!"  
-
+[1]: img/tufts_university.png 
+[2]: http://tdface.ece.tufts.edu "Tufts Face Database: Request permission to use this dataset!!!"  
 
 ## Next-steps  
  
 - Extend the application to webcams.  
 - Extend the application to video feeds.  
 - Add tracking for video.
+- As the application is used by others, the data can be saved, tagged, and then used as future training data to better the model.
 
 ## Citations
 
@@ -105,14 +116,3 @@ Any publication using this database must reference to this
 - Paper: Panetta, Karen, Qianwen Wan, Sos Agaian, Srijith Rajeev, Shreyas Kamath, Rahul Rajendran, Shishir Rao et al. "A comprehensive database for benchmarking imaging systems." IEEE Transactions on Pattern Analysis and Machine Intelligence (2018).
 
 For any enquires regarding the Tufts Face Database, contact: panettavisonsensinglab@gmail.com
-
-- Kanade, T., Cohn, J. F., & Tian, Y. (2000). Comprehensive database for facial
-expression analysis. Proceedings of the Fourth IEEE International Conference
-on Automatic Face and Gesture Recognition (FG'00), Grenoble, France, 46-53.
-- Lucey, P., Cohn, J. F., Kanade, T., Saragih, J., Ambadar, Z., & Matthews, I.
-(2010). The Extended Cohn-Kanade Dataset (CK+): A complete expression
-dataset for action unit and emotion-specified expression. Proceedings of the
-Third International Workshop on CVPR for Human Communicative Behavior
-Analysis (CVPR4HB 2010), San Francisco, USA, 94-101.
-
-- Request access, contact: Yaohan Ding YAD30@pitt.edu.
